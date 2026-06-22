@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>球友直播 · 日常查询与对照</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #fafafa;
+      color: #1e1e1e;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- 顶部导航 --- */
+    .top-nav {
+      padding: 28px 0 12px;
+      border-bottom: 1px solid #eaeaea;
+      margin-bottom: 56px;
+    }
+
+    .top-nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-name {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #2b2b2b;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: #5a5a5a;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: #111;
+    }
+
+    /* --- hero 简语 --- */
+    .hero {
+      margin-bottom: 64px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #444;
+      max-width: 560px;
+    }
+
+    .hero .highlight {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 0 6px;
+      border-radius: 4px;
+      font-weight: 450;
+    }
+
+    /* --- 核心介绍段落 --- */
+    .intro-block {
+      margin-bottom: 56px;
+    }
+
+    .intro-block p {
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+      color: #2e2e2e;
+    }
+
+    .intro-block a {
+      color: #1e1e1e;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+      text-decoration-color: #b0b0b0;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .intro-block a:hover {
+      text-decoration-color: #1e1e1e;
+    }
+
+    /* --- 三个场景模块 --- */
+    .scene-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-bottom: 64px;
+    }
+
+    .scene-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.04);
+      border: 1px solid #efefef;
+      transition: box-shadow 0.2s;
+    }
+
+    .scene-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .scene-card h3 {
+      font-size: 1.1rem;
+      font-weight: 540;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .scene-card .tag {
+      display: inline-block;
+      background: #f2f2f2;
+      border-radius: 20px;
+      padding: 2px 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #4a4a4a;
+      margin-bottom: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .scene-card p {
+      font-size: 0.95rem;
+      color: #3b3b3b;
+      margin-bottom: 0;
+    }
+
+    .scene-card .extra-note {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #6a6a6a;
+      border-left: 2px solid #e0e0e0;
+      padding-left: 12px;
+    }
+
+    /* --- 常见说明 / FAQ 摘要 --- */
+    .faq-summary {
+      margin-bottom: 56px;
+    }
+
+    .faq-summary h2 {
+      font-size: 1.2rem;
+      font-weight: 520;
+      margin-bottom: 22px;
+      letter-spacing: -0.01em;
+    }
+
+    .faq-item {
+      padding: 16px 0;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .faq-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .faq-item .q {
+      font-weight: 500;
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+      color: #1e1e1e;
+    }
+
+    .faq-item .a {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .faq-item .a a {
+      color: #1e1e1e;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #bbb;
+    }
+
+    .faq-item .a a:hover {
+      text-decoration-color: #1e1e1e;
+    }
+
+    /* --- 底部 --- */
+    .footer-note {
+      border-top: 1px solid #eaeaea;
+      padding: 32px 0 48px;
+      font-size: 0.8rem;
+      color: #7a7a7a;
+      text-align: center;
+    }
+
+    .footer-note a {
+      color: #7a7a7a;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* --- 响应式 --- */
+    @media (max-width: 500px) {
+      .container {
+        padding: 0 18px;
+      }
+      .top-nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .nav-links {
+        gap: 20px;
+        font-size: 0.85rem;
+      }
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+      .scene-card {
+        padding: 18px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <div class="container">
+      <span class="site-name">球友直播 · 对照</span>
+      <ul class="nav-links">
+        <li><a href="#intro">介绍</a></li>
+        <li><a href="#scenes">场景</a></li>
+        <li><a href="#faq">说明</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- hero 简语 -->
+  <div class="container hero">
+    <h1>日常查询、对照与延伸阅读</h1>
+    <p>
+      球类爱好者常会面对比赛日程、规则对照、以及器材信息——<span class="highlight">方便整理</span>，
+      也适合随手翻阅。下面从几个常见角度拆解，让信息更顺手。
+    </p>
+  </div>
+
+  <!-- 核心介绍 -->
+  <div class="container intro-block" id="intro">
+    <p>
+      如果你平时喜欢关注球类赛事或者偶尔需要确认某项规则、赛程或术语，
+      你会发现信息分散在不同页面里。而像 <a href="https://cns-qiuyouzhibo.com">球友直播</a>
+      这样的站点，把多个球类项目的动态整合在一个地方，省去来回切换的麻烦。
+    </p>
+    <p>
+      这里不鼓吹“万能”，只是提供一个更集中的信息来源。你可以把它当作一张
+      随时展开的对照表——比赛时间、队伍近况、基础数据，不必每次都从头搜索。
+    </p>
+  </div>
+
+  <!-- 三个场景模块 -->
+  <div class="container" id="scenes">
+    <div class="scene-grid">
+      <div class="scene-card">
+        <span class="tag">日常查询</span>
+        <h3>赛程与结果对照</h3>
+        <p>
+          周末想追几场球，但又记不清具体开赛时间。打开页面扫一眼，
+          把关注的几场标在手机备忘里。赛后也能快速回看比分和关键节点。
+        </p>
+        <div class="extra-note">也可配合日历提醒，减少错过重要场次的概率。</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="tag">规则与术语延伸</span>
+        <h3>边看边查</h3>
+        <p>
+          转播里突然冒出个不熟悉的判罚术语，或者想确认某项规则的具体解释。
+          不必切到专门的规则手册，在 <a href="https://cns-qiuyouzhibo.com">球友直播</a>
+          的关联板块里通常能找到简明说明，适合观赛间隙快速扫一眼。
+        </p>
+      </div>
+
+      <div class="scene-card">
+        <span class="tag">装备与场地参考</span>
+        <h3>器材参数对照</h3>
+        <p>
+          从球拍磅数、篮球气压到场地尺寸，不少球友会在入手新装备前翻几篇对照。
+          这里有整理过的常见规格列表，适合横向比较后再做决定。
+        </p>
+        <div class="extra-note">数据来源多为公开资料，购买前建议再确认最新版本。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 常见说明 / FAQ 摘要 -->
+  <div class="container faq-summary" id="faq">
+    <h2>一些常见说明</h2>
+
+    <div class="faq-item">
+      <div class="q">页面信息多久更新一次？</div>
+      <div class="a">
+        赛程和比分通常随赛事推进保持同步，不过遇到临时调整可能会有延迟。
+        建议把 <a href="https://cns-qiuyouzhibo.com">球友直播</a>
+        作为参考渠道之一，关键场次再核对官方消息。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">是否涵盖所有球类项目？</div>
+      <div class="a">
+        主要覆盖足球、篮球、网球、羽毛球、乒乓球等常见项目，一些小众球类
+        可能暂时未收录。你可以通过站内搜索或反馈渠道提出需求。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">移动端浏览体验怎样？</div>
+      <div class="a">
+        页面针对手机做了适配，列表和卡片在窄屏上会自动调整。
+        如果遇到显示异常，可以尝试刷新或更换浏览器。
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <footer class="footer-note">
+    <div class="container">
+      <a href="https://cns-qiuyouzhibo.com">球友直播</a> · 日常对照与延伸阅读
+    </div>
+  </footer>
+
+</body>
+</html>
